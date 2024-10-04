@@ -1,16 +1,21 @@
-
+import { useEffect, useState } from 'react';
+import { fetchImages } from './utils/api';
 import './App.css'
 
 function App() {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    fetchImages().then(setImages);
+  }, []);
 
   return (
-    <>
-      <main>
-        <h1>Seja bem vindo! :)</h1>
-        <p>Desafio de Galeria de Imagens - Processo Seletivo Frontend Fusion</p>
-      </main>
-    </>
+    <div className="gallery grid grid-cols-3 gap-4">
+      {images.map(image => (
+        <img key={image.id} src={image.download_url} alt={image.author} className="rounded-md" />
+      ))}
+    </div>
   );
 }
 
-export default App
+export default App;
